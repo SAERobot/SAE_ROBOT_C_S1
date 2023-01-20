@@ -1,8 +1,21 @@
 # SAE Robot : Programmation
 
-Ce programme permet de contrôler un robot suiveur de ligne en utilisant le microcontrôleur mbed FRDM-KL25Z.
+Ce programme permet de contrôler un robot suiveur de ligne en utilisant le microcontrôleur mbed FRDM-KL25Z. Il est développé par l'équipe Coochie de l'Institut Universitaire Technologique de Nice (IUT Nice Section GEII) dans le cadre du projet SAE Robot. Le code est écrit en C++ et utilise la bibliothèque [mbed](https://os.mbed.com/).
+
+## Table des matières
+- [SAE Robot : Programmation](#sae-robot-programmation)
+  - [Table des matières](#table-des-matières)
+  - [Matériel](#matériel)
+  - [Installation](#installation)
+  - [Building and running](#building-and-running)
+      - [Mbed CLI 2](#mbed-cli-2)
+      - [Mbed CLI 1](#mbed-cli-1)
+  - [Note](#note)
+
+## Matériel
 
 | Caractéristique | Valeur |
+| --- | --- |
 | Microcontrôleur | MKL25Z128VLK4 |
 | Fréquence d'horloge | 48 MHz |
 | Flash de mémoire | 128 KB |
@@ -13,7 +26,7 @@ Ce programme permet de contrôler un robot suiveur de ligne en utilisant le micr
 | Dimensions (en mm) | 31.75 x 25.4 |
 
 ## Installation
-1. Téléchargez le binary à partir de ce dépôt [Releases](https://github.com/SAEs-Coochie/SAE_ROBOT_C/releases/latest)
+1. Téléchargez le binary à partir de ce dépôt : [Releases](https://github.com/SAEs-Coochie/SAE_ROBOT_C/releases/latest)
 2. Branchez les cartes de capteurs, de commande, de IHM et de quadrants en pont en H sur le microcontrôleur
 3. Connectez le microcontrôleur frdm-kl25z à l'ordinateur à l'aide d'un câble USB
 4. Téléversez le code sur le microcontrôleur
