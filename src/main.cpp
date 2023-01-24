@@ -4,15 +4,28 @@
  * Licence MIT
  */
 
-#include "mbed.h"
+using namespace std;
+
+#include <mbed.h>
+#include <robot.hpp>
 #include "ihm.cpp"
 #include "cmd_moteurs.cpp"
 #include "cmd_ligne.cpp"
 
+Thread threadDebug;
+Robot goofyBot;
+
+void debugMode() {
+  goofyBot.debugMode();
+}
+
 int main() {
-    // Test mbed
-    while(true) {
-      printf("Hello World !\n");
-    }
-    return 0;
+  // Mode debug du robot
+  goofyBot.debug = true;
+  
+  if(goofyBot.debug == true) {
+    threadDebug.start(debugMode);
+  }
+
+  // goofyBot.start();
 }
