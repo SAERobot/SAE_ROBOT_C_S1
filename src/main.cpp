@@ -8,9 +8,12 @@ using namespace std;
 
 #include <mbed.h>
 #include <robot.hpp>
-#include "ihm.cpp"
-#include "cmd_moteurs.cpp"
-#include "cmd_ligne.cpp"
+#include <ihm.hpp>
+
+// Programmes
+#include <confettis.hpp>
+// #include <carre.hpp>
+// #include <suiveurLigne.hpp>
 
 Thread threadDebug;
 Robot goofyBot;
@@ -21,11 +24,13 @@ void debugMode() {
 
 int main() {
   // Mode debug du robot
-  goofyBot.debug = true;
+  goofyBot.mode = DEBUG_MODE;
   
-  if(goofyBot.debug == true) {
+  if(goofyBot.mode == DEBUG_MODE) {
     threadDebug.start(debugMode);
   }
+
+  ihmBoot(goofyBot);
 
   // goofyBot.start();
 }

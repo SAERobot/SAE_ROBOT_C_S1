@@ -1,36 +1,44 @@
-#include "robot.hpp"
+#include <robot.hpp>
 
 Robot::Robot() :
     jack(PTE20),
     finCourse(PTE21),
     mesureBatterie(A0),
-    captLigneDroite1(A1),
-    captLigneDroite2(A2),
-    captLigneGauche1(A3),
-    captLigneGauche2(A4)
+    captLigneDroiteInt(A1),
+    captLigneDroiteExt(A2),
+    captLigneGaucheInt(A4),
+    captLigneGaucheExt(A3),
+    IHM_Led1(D15),
+    IHM_Led2(D14),
+    IHM_Led3(D13),
+    IHM_Led4(D12),
+    IHM_Btn1(D4),
+    IHM_Btn2(D5),
+    IHM_Btn3(A5),
+    IHM_Btn4(PTE30)
 {
-    debug = false;
+    mode = WAITING_MODE;
     boot = false;
 }
 
 void Robot::debugMode() {
-    printf("Jack | FinCourse | MesureBatterie | Droite1 | Droite2 | Gauche1 | Gauche2\n");
+    printf("Jack | FinCourse | MesureBatterie | DroiteE | DroiteI | GaucheI | GaucheE \n\r");
     while (1) {
         jackVal = jack.read();
         fcVal = finCourse.read();
         mbVal = mesureBatterie.read();
-        d1Val = captLigneDroite1.read();
-        d2Val = captLigneDroite2.read();
-        g1Val = captLigneGauche1.read();
-        g2Val = captLigneGauche2.read();
-        printf("%4d | %9d | %14.2f | %7.2f | %7.2f | %7.2f | %7.2f\n", 
+        dIntVal = captLigneDroiteInt.read();
+        dExtVal = captLigneDroiteExt.read();
+        gIntVal = captLigneGaucheInt.read();
+        gExtVal = captLigneGaucheExt.read();
+        printf("%4d | %9d | %14.2lf | %7.2lf | %7.2lf | %7.2lf | %7.2lf \n\r", 
             jackVal, 
             fcVal, 
-            mbVal, 
-            d1Val, 
-            d2Val,
-            g1Val,
-            g2Val
+            mbVal * 12, 
+            dExtVal * 3.3, 
+            dIntVal * 3.3,
+            gIntVal * 3.3,
+            gExtVal * 3.3
         );
         thread_sleep_for(300);
     }
