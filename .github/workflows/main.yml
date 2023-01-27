@@ -22,3 +22,9 @@ jobs:
 
       - name: Build PlatformIO Project
         run: pio run
+
+      - name : Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Firmware
+          path: .pio/build/frdm_kl25z/firmware.bin
