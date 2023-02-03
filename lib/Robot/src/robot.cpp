@@ -52,6 +52,7 @@ void Robot::debugMode() {
     }
 }
 
+// Deprecated function a changer
 void Robot::avancer(float pwmGauche, float pwmDroit) {
     moteurDroit.period(T);
     moteurGauche.period(T);
@@ -62,4 +63,36 @@ void Robot::avancer(float pwmGauche, float pwmDroit) {
 void Robot::sens(int sensGauche, int sensDroit) {
     moteurGaucheSens = sensGauche;
     moteurDroitSens = sensDroit;
+}
+
+// Nouvelle fonction de déplacement
+
+void Robot::move(float pwmGauche, float pwmDroit) {
+    moteurDroit.period(T);
+    moteurGauche.period(T);
+
+    if(pwmDroit >= -100 && pwmDroit < 0) { // Si le pwm est négatif, on inverse le sens du moteur et on prend la valeur absolue du pwm
+        moteurDroitSens = 0;
+        pwmDroit = -pwmDroit;
+        pwmDroit /= 100; // On divise par 100 pour avoir un pwm entre 0 et 1
+    } else if(pwmDroit > 0 && pwmDroit <= 100) { // Si le pwm est positif, on met le sens du moteur à 1 (avancer)
+        pwmDroit /= 100;
+        moteurDroitSens = 1;
+    } else {
+        pwmDroit = 0; // Sinon on met le pwm à 0
+    }
+
+    if(pwmGauche >= -100 && pwmGauche < 0) { 
+        moteurGaucheSens = 0;
+        pwmGauche = -pwmGauche;
+        pwmGauche /= 100;
+    } else if(pwmGauche > 0 && pwmGauche <= 100) {
+        pwmGauche /= 100;
+        moteurGaucheSens = 1;
+    } else {
+        pwmGauche = 0;
+    }
+
+    moteurDroit.pulsewidth(T * pwmDroit);
+    moteurGauche.pulsewidth(T * pwmGauche);
 }

@@ -5,10 +5,8 @@
 // Programme carré
 
 void carre(Robot& goofyBot) {
-    int etat = 0;
-    int i=0;
+    int i = 0;
     int longueur = ihmSel(goofyBot);
-    printf("Longueur : %d", longueur);
 
        do {
         goofyBot.sens(1,1);
@@ -23,10 +21,6 @@ void carre(Robot& goofyBot) {
         i++;
        } while (i<4);
 
-
-
     goofyBot.sens(1,1);
     goofyBot.avancer(1,1);
-
-                
 }

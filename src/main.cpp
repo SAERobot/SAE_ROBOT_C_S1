@@ -1,8 +1,11 @@
-/* Projet SAE Robot
- * Robot Suiveur de ligne
- * TEAM COOCHIE - IUT Nice Côte D'Azur 
- * Licence MIT
- */
+/* 
+
+    Projet SAE Robot
+    goofyBot
+    TEAM COOCHIE - IUT Nice Côte D'Azur 
+    Licence MIT - 2023 
+
+*/
 
 #include <mbed.h>
 #include <robot.hpp>
@@ -11,7 +14,7 @@
 // Programmes
 #include <confettis.hpp>
 #include <carre.hpp>
-// #include <suiveurLigne.hpp>
+#include <suiveurLigne.hpp>
 
 Thread threadDebug;
 Robot goofyBot;
