@@ -11,15 +11,6 @@
 
 class Robot {
 
-private:
-    DigitalIn jack;
-    DigitalIn finCourse;
-    AnalogIn mesureBatterie;
-    AnalogIn captLigneDroiteInt;
-    AnalogIn captLigneDroiteExt;
-    AnalogIn captLigneGaucheInt;
-    AnalogIn captLigneGaucheExt;
-
 public:
     Robot();
     bool boot;
@@ -35,6 +26,21 @@ public:
     DigitalIn IHM_Btn3;
     DigitalIn IHM_Btn4;
 
+    DigitalIn jack;
+    DigitalIn finCourse;
+    AnalogIn mesureBatterie;
+    AnalogIn captLigneDroiteInt;
+    AnalogIn captLigneDroiteExt;
+    AnalogIn captLigneGaucheInt;
+    AnalogIn captLigneGaucheExt;
+
+    PwmOut moteurDroit;
+    PwmOut moteurGauche;
+    DigitalOut moteurDroitSens;
+    DigitalOut moteurGaucheSens;
+
+    Thread dataCaptureThread;
+
     int jackVal;
     int fcVal;
     double mbVal;
@@ -44,6 +50,10 @@ public:
     double gExtVal;
 
     void debugMode();
+
+    void avancer(float pwmGauche, float pwmDroit);
+    void sens(int sensGauche, int sensDroit);
+
     bool isReady();
 };
 
