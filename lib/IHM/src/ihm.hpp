@@ -3,7 +3,8 @@
 
 #include <robot.hpp>
 
+void ihmDebug(Robot& goofyBot);
 void ihmBoot(Robot& goofyBot);
-void ihm(Robot& goofyBot);
+int ihmSel(Robot& goofyBot);
 
 #endif

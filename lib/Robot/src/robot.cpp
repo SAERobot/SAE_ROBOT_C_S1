@@ -1,5 +1,7 @@
 #include <robot.hpp>
 
+#define T 0.001
+
 Robot::Robot() :
     jack(PTE20),
     finCourse(PTE21),
@@ -8,6 +10,7 @@ Robot::Robot() :
     captLigneDroiteExt(A2),
     captLigneGaucheInt(A4),
     captLigneGaucheExt(A3),
+
     IHM_Led1(D15),
     IHM_Led2(D14),
     IHM_Led3(D13),
@@ -15,7 +18,12 @@ Robot::Robot() :
     IHM_Btn1(D4),
     IHM_Btn2(D5),
     IHM_Btn3(A5),
-    IHM_Btn4(PTE30)
+    IHM_Btn4(PTE30),
+
+    moteurDroit(D6),
+    moteurGauche(D8),
+    moteurDroitSens(D7),
+    moteurGaucheSens(D9)
 {
     mode = WAITING_MODE;
     boot = false;
@@ -40,6 +48,18 @@ void Robot::debugMode() {
             gIntVal * 3.3,
             gExtVal * 3.3
         );
-        thread_sleep_for(300);
+        thread_sleep_for(50);
     }
+}
+
+void Robot::avancer(float pwmGauche, float pwmDroit) {
+    moteurDroit.period(T);
+    moteurGauche.period(T);
+    moteurDroit.pulsewidth(T * pwmDroit);
+    moteurGauche.pulsewidth(T * pwmGauche);
+}
+
+void Robot::sens(int sensGauche, int sensDroit) {
+    moteurGaucheSens = sensGauche;
+    moteurDroitSens = sensDroit;
 }
