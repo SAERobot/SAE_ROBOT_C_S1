@@ -9,18 +9,14 @@ void carre(Robot& goofyBot) {
     int longueur = ihmSel(goofyBot);
 
        do {
-        goofyBot.sens(1,1);
-        goofyBot.avancer(0.650,0.650);
-        wait_us ((longueur / 45.5) * 1000000) ;
-        goofyBot.sens(1, 1);
-        goofyBot.avancer(1,1);
-        wait_us(500000);
-        goofyBot.sens(0,1);
-        goofyBot.avancer(0.75,0.25);
+        goofyBot.move(0.35,0.35);
+        wait_us ((longueur / 45.5) * 1000000);
+        goofyBot.move(0,0);
+        wait_us(500000); 
+        goofyBot.move(-0.75,0.75);
         wait_us(210000);
         i++;
        } while (i<4);
 
-    goofyBot.sens(1,1);
-    goofyBot.avancer(1,1);
+    goofyBot.move(0,0);
 }
