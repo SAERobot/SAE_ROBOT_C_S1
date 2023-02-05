@@ -21,7 +21,6 @@ Robot goofyBot;
 
 int main() {
 
-    threadDebug.start(callback(&goofyBot, &Robot::debug));
-    carre(goofyBot);
+    suiveurLigne(goofyBot);
 
 }
