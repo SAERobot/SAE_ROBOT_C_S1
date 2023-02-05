@@ -4,7 +4,6 @@
 // Programme confettis
 
 void confettis(Robot& goofyBot) {
-    // Démarrage du thread de capture des données
     int etat = 1;
     
     while (1) {
@@ -23,8 +22,7 @@ void confettis(Robot& goofyBot) {
             
             case 2:
                 if(goofyBot.dIntVal >= 0.2 || goofyBot.dExtVal >= 0.2 || goofyBot.gIntVal >= 0.2 || goofyBot.gExtVal >= 0.2) {
-                    goofyBot.sens(1, 1);
-                    goofyBot.avancer(0.7, 0.7);
+                    goofyBot.move(50,50);
                 } else {
                     etat = 3;
                 }
@@ -32,7 +30,7 @@ void confettis(Robot& goofyBot) {
 
             case 3:
                 wait_us(300000);
-                goofyBot.avancer(1, 1);
+                goofyBot.move(0,0);
                 etat = 1;
                 break;
         }

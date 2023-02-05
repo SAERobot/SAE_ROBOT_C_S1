@@ -76,10 +76,10 @@ void Robot::move(float pwmGauche, float pwmDroit) {
         pwmDroit = -pwmDroit;
         pwmDroit /= 100; // On divise par 100 pour avoir un pwm entre 0 et 1
     } else if(pwmDroit > 0 && pwmDroit <= 100) { // Si le pwm est positif, on met le sens du moteur à 1 (avancer)
-        pwmDroit /= 100;
         moteurDroitSens = 1;
+        pwmDroit /= 100;
     } else {
-        pwmDroit = 0; // Sinon on met le pwm à 0
+        pwmDroit = 1; // Sinon on met le pwm à 0
     }
 
     if(pwmGauche >= -100 && pwmGauche < 0) { 
@@ -87,10 +87,10 @@ void Robot::move(float pwmGauche, float pwmDroit) {
         pwmGauche = -pwmGauche;
         pwmGauche /= 100;
     } else if(pwmGauche > 0 && pwmGauche <= 100) {
-        pwmGauche /= 100;
         moteurGaucheSens = 1;
+        pwmGauche /= 100;
     } else {
-        pwmGauche = 0;
+        pwmGauche = 1;
     }
 
     moteurDroit.pulsewidth(T * pwmDroit);
