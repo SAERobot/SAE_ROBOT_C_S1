@@ -3,6 +3,26 @@
 
 // Programme confettis
 
+void fuckmypussy(Robot& goofyBot) {
+    goofyBot.IHM_Led1.write(0);
+    goofyBot.IHM_Led2.write(0);
+    goofyBot.IHM_Led3.write(0);
+    goofyBot.IHM_Led4.write(0);
+    wait_us(50000);
+    goofyBot.IHM_Led1.write(1);
+    wait_us(50000);
+    goofyBot.IHM_Led2.write(1);
+    wait_us(50000);
+    goofyBot.IHM_Led3.write(1);
+    wait_us(50000);
+    goofyBot.IHM_Led4.write(1);
+    wait_us(50000);
+    goofyBot.IHM_Led1.write(0);
+    goofyBot.IHM_Led2.write(0);
+    goofyBot.IHM_Led3.write(0);
+    goofyBot.IHM_Led4.write(0);
+}
+
 void confettis(Robot& goofyBot) {
     int etat = 1;
     
@@ -21,17 +41,21 @@ void confettis(Robot& goofyBot) {
                 break;
             
             case 2:
-                if(goofyBot.dIntVal >= 0.2 || goofyBot.dExtVal >= 0.2 || goofyBot.gIntVal >= 0.2 || goofyBot.gExtVal >= 0.2) {
-                    goofyBot.move(50,50);
-                } else {
-                    etat = 3;
+                if(goofyBot.dIntVal <= 0.5 && goofyBot.dExtVal <= 0.5 && goofyBot.gIntVal <= 0.5 && goofyBot.gExtVal <= 0.5) {
+                    etat = 4;
                 }
                 break;
+        }
 
-            case 3:
-                wait_us(300000);
+        switch(etat) {
+            case 2 :
+                fuckmypussy(goofyBot);
+                goofyBot.move(70,70);
+                break;
+
+            case 4 :
+                wait_us(25000);
                 goofyBot.move(0,0);
-                etat = 1;
                 break;
         }
     }

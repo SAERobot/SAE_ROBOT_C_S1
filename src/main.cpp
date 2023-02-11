@@ -16,11 +16,9 @@
 #include <carre.hpp>
 #include <suiveurLigne.hpp>
 
-Thread threadDebug;
 Robot goofyBot;
 
 int main() {
-
-    suiveurLigne(goofyBot);
-
+    ihmBoot(goofyBot);
+    return 0;
 }

@@ -39,8 +39,6 @@ public:
     DigitalOut moteurDroitSens;
     DigitalOut moteurGaucheSens;
 
-    Thread dataCaptureThread;
-
     int jackVal;
     int fcVal;
     double mbVal;
@@ -62,11 +60,6 @@ public:
     void avancer(float pwmGauche, float pwmDroit);
     void sens(int sensGauche, int sensDroit);
 
-    /** Déplace le robot en fonction des PWMs des moteurs gauche et droit et des sens des moteurs
-     *
-     *  @param pwmGauche Valeur du PWM du moteur gauche entre -100 et 100 (reverse et forward)
-     *  @param pwmDroit Valeur du PWM du moteur droit entre -100 et 100 (reverse et forward)
-     */
     void move(float pwmGauche, float pwmDroit);
 
     bool isReady();
