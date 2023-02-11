@@ -3,6 +3,7 @@
 
 #include <confettis.hpp>
 #include <carre.hpp>
+#include <suiveurLigne.hpp>
 
 void ihmDebug(Robot& goofyBot) {
     while(true) {
@@ -36,51 +37,67 @@ void ihmDebug(Robot& goofyBot) {
 }
 
 void ihmBoot(Robot& goofyBot) {
+    int b1;
+    int b2;
+    int b3;
+    int b4;
+
+
     // Petit effet de boot pour l'IHM
-    ihmBruh(goofyBot);
+    // il faut controler le niveau de la batterie
+    for(int i = 0; i < 3; i++) {
+        goofyBot.IHM_Led1.write(0);
+        goofyBot.IHM_Led2.write(0);
+        goofyBot.IHM_Led3.write(0);
+        goofyBot.IHM_Led4.write(0);
+        wait_us(50000);
+        goofyBot.IHM_Led1.write(1);
+        wait_us(50000);
+        goofyBot.IHM_Led2.write(1);
+        wait_us(50000);
+        goofyBot.IHM_Led3.write(1);
+        wait_us(50000);
+        goofyBot.IHM_Led4.write(1);
+        wait_us(50000);
+    }
+    goofyBot.IHM_Led1.write(0);
+    goofyBot.IHM_Led2.write(0);
+    goofyBot.IHM_Led3.write(0);
+    goofyBot.IHM_Led4.write(0);
+
+    goofyBot.mode = WAITING_MODE;
+
+    goofyBot.IHM_Btn1.mode(PullNone);
+    goofyBot.IHM_Btn2.mode(PullNone);
+    goofyBot.IHM_Btn3.mode(PullNone);
+    goofyBot.IHM_Btn4.mode(PullNone);
 
     // Après démarrage de l'IHM, on attend que le programme soit sélectionné
-    while(1) {
-        while(goofyBot.mode == WAITING_MODE ) {
-            if(goofyBot.IHM_Btn1.read() == 0) {
-                goofyBot.mode = CONFETTIS_MODE;
-                wait_us(100000);
-            }
-            else if(goofyBot.IHM_Btn2.read() == 0) {
-                goofyBot.mode = LINE_FOLLOWING_MODE ;
-                wait_us(100000);
-            }
-            else if(goofyBot.IHM_Btn3.read() == 0) {
-                goofyBot.mode = SQUARE_MODE ;
-                wait_us(100000);
-            }
-            else if(goofyBot.IHM_Btn4.read() == 0) {
-                goofyBot.mode = DEBUG_MODE ;
-                wait_us(100000);
-            }
-        }
+    while(true) {        
+        b1 = goofyBot.IHM_Btn1.read();
+        b2 = goofyBot.IHM_Btn2.read();
+        b3 = goofyBot.IHM_Btn3.read();
+        b4 = goofyBot.IHM_Btn4.read();
 
-        // Une fois le programme sélectionné, on lance le programme
-        switch(goofyBot.mode) {
-            case CONFETTIS_MODE:
-                goofyBot.IHM_Led1.write(0);
-                confettis(goofyBot);
-                break;
-            case LINE_FOLLOWING_MODE:
-                // suiveurLigne(goofyBot);
-                break;
-            case SQUARE_MODE:
-                carre(goofyBot);
-                break;
-            case DEBUG_MODE:
-                goofyBot.debugMode();
-                break;
-            default:
-                goofyBot.IHM_Led1.write(1);
-                goofyBot.IHM_Led2.write(1);
-                goofyBot.IHM_Led3.write(1);
-                goofyBot.IHM_Led4.write(1);
-                break;
+        if(b1 == 1) {
+            goofyBot.mode = CONFETTIS_MODE;
+            goofyBot.IHM_Led1.write(1);
+            confettis(goofyBot);
+        }
+        else if(b2 == 1) {
+            goofyBot.mode = LINE_FOLLOWING_MODE ;
+            goofyBot.IHM_Led2.write(1);
+            suiveurLigne(goofyBot);
+        }
+        else if(b3 == 1) {
+            goofyBot.mode = SQUARE_MODE ;
+            goofyBot.IHM_Led3.write(1);
+            carre(goofyBot);
+        }
+        else if(b4 == 1) {
+            goofyBot.mode = DEBUG_MODE ;
+            goofyBot.IHM_Led4.write(1);
+            goofyBot.debugMode();
         }
     }
 }
@@ -127,24 +144,7 @@ int ihmSel(Robot& goofyBot) {
         wait_us(500000);
     }
 
-    return res;
-}
+    goofyBot.IHM_Led2.write(0);
 
-void ihmBruh(Robot& goofyBot) {
-    for(int i = 0; i < 3; i++) {
-        goofyBot.IHM_Led1.write(0);
-        goofyBot.IHM_Led2.write(0);
-        goofyBot.IHM_Led3.write(0);
-        goofyBot.IHM_Led4.write(0);
-        wait_us(50000);
-        goofyBot.IHM_Led1.write(1);
-        wait_us(50000);
-        goofyBot.IHM_Led2.write(1);
-        wait_us(50000);
-        goofyBot.IHM_Led3.write(1);
-        wait_us(50000);
-        goofyBot.IHM_Led4.write(1);
-        wait_us(50000);
-    }
-    goofyBot.IHM_Led1.write(0);
+    return res;
 }

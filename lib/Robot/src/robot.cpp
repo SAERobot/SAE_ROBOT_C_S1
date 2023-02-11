@@ -30,32 +30,35 @@ Robot::Robot() :
 }
 
 void Robot::debugMode() {
-    printf("Jack | FinCourse | MesureBatterie | DroiteE | DroiteI | GaucheI | GaucheE \n\r");
+    float battery = 0.0;
+    printf("Jack | FinCourse | MesureBatterie | DroiteE | DroiteI | GaucheI | GaucheE | Epsilon \n\r");
     while (1) {
         jackVal = jack.read();
         fcVal = finCourse.read();
         mbVal = mesureBatterie.read();
+        battery = (mbVal*12*((1200.0+4700.0)/1200.0)+0.6);
         dIntVal = captLigneDroiteInt.read();
         dExtVal = captLigneDroiteExt.read();
         gIntVal = captLigneGaucheInt.read();
         gExtVal = captLigneGaucheExt.read();
-        printf("%4d | %9d | %14.2lf | %7.2lf | %7.2lf | %7.2lf | %7.2lf \n\r", 
+        printf("%4d | %9d | %14.2lf | %7.2lf | %7.2lf | %7.2lf | %7.2lf | %7.2lf \n\r", 
             jackVal, 
             fcVal, 
-            mbVal * 12, 
+            battery, 
             dExtVal * 3.3, 
             dIntVal * 3.3,
             gIntVal * 3.3,
-            gExtVal * 3.3
+            gExtVal * 3.3,
+            (dIntVal - gIntVal)
         );
         thread_sleep_for(50);
     }
 }
 
-// Deprecated function a changer
 void Robot::avancer(float pwmGauche, float pwmDroit) {
     moteurDroit.period(T);
     moteurGauche.period(T);
+
     moteurDroit.pulsewidth(T * pwmDroit);
     moteurGauche.pulsewidth(T * pwmGauche);
 }
@@ -65,34 +68,44 @@ void Robot::sens(int sensGauche, int sensDroit) {
     moteurDroitSens = sensDroit;
 }
 
-// Nouvelle fonction de déplacement
-
 void Robot::move(float pwmGauche, float pwmDroit) {
     moteurDroit.period(T);
     moteurGauche.period(T);
 
-    if(pwmDroit >= -100 && pwmDroit < 0) { // Si le pwm est négatif, on inverse le sens du moteur et on prend la valeur absolue du pwm
-        moteurDroitSens = 0;
-        pwmDroit = -pwmDroit;
-        pwmDroit /= 100; // On divise par 100 pour avoir un pwm entre 0 et 1
-    } else if(pwmDroit > 0 && pwmDroit <= 100) { // Si le pwm est positif, on met le sens du moteur à 1 (avancer)
-        pwmDroit /= 100;
-        moteurDroitSens = 1;
-    } else {
-        pwmDroit = 0; // Sinon on met le pwm à 0
+    if(pwmGauche >= -100.0 && pwmGauche < 0) {
+        moteurGaucheSens = 0;
+        pwmGauche = pwmGauche * -1.0;
+        pwmGauche = pwmGauche / 100.0; // On divise par 100 pour avoir un pwm entre 0 et 1
+        //printf("%f", pwmGauche);
+    } else if (pwmGauche <= 100 && pwmGauche > 0) {
+        moteurGaucheSens = 1;
+        pwmGauche -= 100.0;
+        pwmGauche = pwmGauche * -1.0;
+        pwmGauche = pwmGauche / 100.0;
+        //printf("%f", pwmGauche);
+    } else if (pwmGauche == 0) {
+        moteurGaucheSens = 1;
+        pwmGauche = 1;
+        //printf("%f", pwmGauche);
     }
 
-    if(pwmGauche >= -100 && pwmGauche < 0) { 
-        moteurGaucheSens = 0;
-        pwmGauche = -pwmGauche;
-        pwmGauche /= 100;
-    } else if(pwmGauche > 0 && pwmGauche <= 100) {
-        pwmGauche /= 100;
-        moteurGaucheSens = 1;
-    } else {
-        pwmGauche = 0;
+    if(pwmDroit >= -100.0 && pwmDroit < 0) {
+        moteurDroitSens = 0;
+        pwmDroit = pwmDroit * -1.0;
+        pwmDroit = pwmDroit / 100.0; // On divise par 100 pour avoir un pwm entre 0 et 1
+        //printf("%f", pwmDroit);
+    } else if (pwmDroit <= 100 && pwmDroit > 0) {
+        moteurDroitSens = 1;
+        pwmDroit = pwmDroit - 100.0;
+        pwmDroit = pwmDroit * -1.0;
+        pwmDroit = pwmDroit / 100.0; // On divise par 100 pour avoir un pwm entre 0 et 1
+        //printf("%f", pwmDroit);
+    } else if (pwmDroit == 0) {
+        moteurDroitSens = 1;
+        pwmDroit = 1;
+        //printf("%f", pwmDroit);
     }
 
     moteurDroit.pulsewidth(T * pwmDroit);
     moteurGauche.pulsewidth(T * pwmGauche);
-}
+}  

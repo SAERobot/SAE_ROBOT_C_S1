@@ -5,22 +5,23 @@
 // Programme carré
 
 void carre(Robot& goofyBot) {
-    int i = 0;
     int longueur = ihmSel(goofyBot);
 
-       do {
-        goofyBot.sens(1,1);
-        goofyBot.avancer(0.650,0.650);
+    for(int i = 0; i < 4; i++) {
+        goofyBot.move(45,45);
         wait_us ((longueur / 45.5) * 1000000) ;
-        goofyBot.sens(1, 1);
-        goofyBot.avancer(1,1);
+        goofyBot.move(0,0);
         wait_us(500000);
-        goofyBot.sens(0,1);
-        goofyBot.avancer(0.75,0.25);
-        wait_us(210000);
-        i++;
-       } while (i<4);
+        // augmentation et diminution progressive de la vitesse
+        for(float speed = 25; speed < 90; speed += 5) {
+            goofyBot.move(speed, -70);
+            wait_us(14000);
+        }
+        for(float speed = 100; speed > 90; speed -= 5) {
+            goofyBot.move(speed, -70);
+            wait_us(14000);
+        }
+    }
 
-    goofyBot.sens(1,1);
-    goofyBot.avancer(1,1);
+    goofyBot.move(0,0);
 }
