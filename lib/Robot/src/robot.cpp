@@ -2,6 +2,7 @@
 
 #define T 0.001
 
+// Constructeur
 Robot::Robot() :
     jack(PTE20),
     finCourse(PTE21),
@@ -24,12 +25,14 @@ Robot::Robot() :
     moteurGauche(D8),
     moteurDroitSens(D7),
     moteurGaucheSens(D9)
-{
-    mode = WAITING_MODE;
-    boot = false;
+{ 
+    // Initialisation des moteurs
+    moteurDroitSens = 1;
+    moteurGaucheSens = 1;
 }
 
 void Robot::debugMode() {
+    // Debug mode - Affichage des valeurs des capteurs
     float battery = 0.0;
     printf("Jack | FinCourse | MesureBatterie | DroiteE | DroiteI | GaucheI | GaucheE | Epsilon \n\r");
     while (1) {
@@ -51,61 +54,44 @@ void Robot::debugMode() {
             gExtVal * 3.3,
             (dIntVal - gIntVal)
         );
-        thread_sleep_for(50);
     }
 }
 
-void Robot::avancer(float pwmGauche, float pwmDroit) {
-    moteurDroit.period(T);
-    moteurGauche.period(T);
-
-    moteurDroit.pulsewidth(T * pwmDroit);
-    moteurGauche.pulsewidth(T * pwmGauche);
-}
-
-void Robot::sens(int sensGauche, int sensDroit) {
-    moteurGaucheSens = sensGauche;
-    moteurDroitSens = sensDroit;
-}
-
 void Robot::move(float pwmGauche, float pwmDroit) {
+    // On définit la période des moteurs
     moteurDroit.period(T);
     moteurGauche.period(T);
 
     if(pwmGauche >= -100.0 && pwmGauche < 0) {
-        moteurGaucheSens = 0;
+        moteurGaucheSens = 0; // Sens arrière
         pwmGauche = pwmGauche * -1.0;
         pwmGauche = pwmGauche / 100.0; // On divise par 100 pour avoir un pwm entre 0 et 1
-        //printf("%f", pwmGauche);
     } else if (pwmGauche <= 100 && pwmGauche > 0) {
-        moteurGaucheSens = 1;
+        moteurGaucheSens = 1; // Sens avant
         pwmGauche -= 100.0;
         pwmGauche = pwmGauche * -1.0;
         pwmGauche = pwmGauche / 100.0;
-        //printf("%f", pwmGauche);
     } else if (pwmGauche == 0) {
         moteurGaucheSens = 1;
-        pwmGauche = 1;
-        //printf("%f", pwmGauche);
+        pwmGauche = 1; // Stop
     }
 
     if(pwmDroit >= -100.0 && pwmDroit < 0) {
-        moteurDroitSens = 0;
-        pwmDroit = pwmDroit * -1.0;
+        moteurDroitSens = 0; // Sens arrière
+        pwmDroit = pwmDroit * -1.0; // On inverse le signe du pwm
         pwmDroit = pwmDroit / 100.0; // On divise par 100 pour avoir un pwm entre 0 et 1
         //printf("%f", pwmDroit);
     } else if (pwmDroit <= 100 && pwmDroit > 0) {
-        moteurDroitSens = 1;
-        pwmDroit = pwmDroit - 100.0;
+        moteurDroitSens = 1; // Sens avant
+        pwmDroit = pwmDroit - 100.0; 
         pwmDroit = pwmDroit * -1.0;
         pwmDroit = pwmDroit / 100.0; // On divise par 100 pour avoir un pwm entre 0 et 1
-        //printf("%f", pwmDroit);
     } else if (pwmDroit == 0) {
         moteurDroitSens = 1;
-        pwmDroit = 1;
-        //printf("%f", pwmDroit);
+        pwmDroit = 1; // Stop
     }
 
+    // On applique le pwm aux moteurs
     moteurDroit.pulsewidth(T * pwmDroit);
     moteurGauche.pulsewidth(T * pwmGauche);
 }  

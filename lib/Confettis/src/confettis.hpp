@@ -12,6 +12,4 @@
  */
 void confettis(Robot& goofyBot);
 
-void fuckmypussy(Robot& goofyBot);
-
 #endif

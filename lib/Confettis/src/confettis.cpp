@@ -3,26 +3,6 @@
 
 // Programme confettis
 
-void fuckmypussy(Robot& goofyBot) {
-    goofyBot.IHM_Led1.write(0);
-    goofyBot.IHM_Led2.write(0);
-    goofyBot.IHM_Led3.write(0);
-    goofyBot.IHM_Led4.write(0);
-    wait_us(50000);
-    goofyBot.IHM_Led1.write(1);
-    wait_us(50000);
-    goofyBot.IHM_Led2.write(1);
-    wait_us(50000);
-    goofyBot.IHM_Led3.write(1);
-    wait_us(50000);
-    goofyBot.IHM_Led4.write(1);
-    wait_us(50000);
-    goofyBot.IHM_Led1.write(0);
-    goofyBot.IHM_Led2.write(0);
-    goofyBot.IHM_Led3.write(0);
-    goofyBot.IHM_Led4.write(0);
-}
-
 void confettis(Robot& goofyBot) {
     int etat = 1;
     
@@ -49,8 +29,7 @@ void confettis(Robot& goofyBot) {
 
         switch(etat) {
             case 2 :
-                fuckmypussy(goofyBot);
-                goofyBot.move(70,70);
+                goofyBot.move(50,50);
                 break;
 
             case 4 :

@@ -3,7 +3,7 @@
 
 #include <confettis.hpp>
 #include <carre.hpp>
-#include <suiveurLigne.hpp>
+#include <suivi.hpp>
 
 void ihmDebug(Robot& goofyBot) {
     while(true) {
@@ -80,22 +80,18 @@ void ihmBoot(Robot& goofyBot) {
         b4 = goofyBot.IHM_Btn4.read();
 
         if(b1 == 1) {
-            goofyBot.mode = CONFETTIS_MODE;
             goofyBot.IHM_Led1.write(1);
             confettis(goofyBot);
         }
         else if(b2 == 1) {
-            goofyBot.mode = LINE_FOLLOWING_MODE ;
             goofyBot.IHM_Led2.write(1);
-            suiveurLigne(goofyBot);
+            suivi(goofyBot);
         }
         else if(b3 == 1) {
-            goofyBot.mode = SQUARE_MODE ;
             goofyBot.IHM_Led3.write(1);
             carre(goofyBot);
         }
         else if(b4 == 1) {
-            goofyBot.mode = DEBUG_MODE ;
             goofyBot.IHM_Led4.write(1);
             goofyBot.debugMode();
         }

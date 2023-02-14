@@ -14,7 +14,7 @@
 // Programmes
 #include <confettis.hpp>
 #include <carre.hpp>
-#include <suiveurLigne.hpp>
+#include <suivi.hpp>
 
 Robot goofyBot;
 
